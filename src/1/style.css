@@ -89,6 +89,11 @@ body {
 #finalScore {
   font-size: 28px;
 }
+#cityWrapper {
+  position: fixed;
+  bottom: -10px;
+  width: 100%;
+}
 .word {
   position: absolute;
   bottom: 0;
