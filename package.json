@@ -1,0 +1,16 @@
+{
+  "name": "co2-pangpang",
+  "version": "1.0.0",
+  "description": "Web game for zero co2 campaign",
+  "main": "index.js",
+  "homepage": "https://weaverslab.github.io/co2-pangpang/",
+  "scripts": {
+    "dev": "parcel src/index.html",
+    "clear": "rm -rf dist/",
+    "build": "parcel build src/index.html",
+    "pre-deploy": "npm run clear && npm run build",
+    "deploy": "npm run pre-deploy && gh-pages -d dist"
+  },
+  "author": "Minwook Park",
+  "license": "ISC"
+}
