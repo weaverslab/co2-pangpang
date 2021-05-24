@@ -12,5 +12,8 @@
     "deploy": "npm run pre-deploy && gh-pages -d dist"
   },
   "author": "Minwook Park",
-  "license": "ISC"
+  "devDependencies": {},
+  "dependencies": {
+    "cssnano": "^4.1.11"
+  }
 }
