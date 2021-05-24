@@ -1,0 +1,1 @@
+{"version":3,"sources":["script.js"],"names":["document","location","href"],"mappings":";AAAAA,SAASC,SAASC,KAChB","file":"script.8f3d55bb.js","sourceRoot":"../src","sourcesContent":["document.location.href =\n  \"https://weaverslab.github.io/co2-pangpang/1/index.html\";\n"]}
