@@ -9,7 +9,7 @@
     "clear": "rm -rf dist/",
     "build": "parcel build src/index.html",
     "pre-deploy": "npm run clear && npm run build",
-    "deploy": "npm run pre-deploy && gh-pages -d dist"
+    "deploy": "gh-pages -d dist"
   },
   "author": "Minwook Park",
   "devDependencies": {},
