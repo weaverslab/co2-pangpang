@@ -61,7 +61,7 @@ parcelRequire = (function (e, r, t, n) {
   {
     EtVE: [
       function (require, module, exports) {
-        module.exports = "./blackCloud.dc392bb5.png";
+        module.exports = "/co2-pangpang/blackCloud.dc392bb5.png";
       },
       {},
     ],
