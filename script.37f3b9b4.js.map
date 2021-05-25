@@ -1,1 +1,0 @@
-{"version":3,"sources":["script.js"],"names":["document","location","href"],"mappings":";AAAAA,SAASC,SAASC,KAAO","file":"script.37f3b9b4.js","sourceRoot":"../src","sourcesContent":["document.location.href = \"/1/index.html\";\n"]}
