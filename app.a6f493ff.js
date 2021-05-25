@@ -117,7 +117,15 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"1/app.js":[function(require,module,exports) {
+})({"1/blackCloud.png":[function(require,module,exports) {
+module.exports = "/blackCloud.435f295a.png";
+},{}],"1/app.js":[function(require,module,exports) {
+"use strict";
+
+var _blackCloud = _interopRequireDefault(require("./blackCloud.png"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -134,9 +142,12 @@ var App = /*#__PURE__*/function () {
     this.width = window.innerWidth;
     this.height = window.innerHeight;
     this.statusElm = document.getElementById("status");
+    this.inputElm = document.getElementById("input");
     this.inputWordElm = document.getElementById("inputWord");
+    this.startElm = document.getElementById("start");
     this.resultElm = document.getElementById("result");
-    this.finalScoreElm = document.getElementById("finalScore"); // game setting
+    this.finalScoreElm = document.getElementById("finalScore");
+    this.playElm = document.getElementById("play"); // game setting
 
     this.defaultSpeed = 3;
     this.speedVariable = 3;
@@ -152,13 +163,8 @@ var App = /*#__PURE__*/function () {
 
     this.resize();
     this.inputWordElm.addEventListener("keydown", this.handleInput.bind(this));
+    this.playElm.addEventListener("click", this.start.bind(this));
     window.addEventListener("resize", this.resize.bind(this), false);
-    window.requestAnimationFrame(this.animate.bind(this)); // game init
-
-    this.showStatus();
-    this.addWord();
-    this.spawnWord();
-    this.scoring();
   }
 
   _createClass(App, [{
@@ -217,10 +223,13 @@ var App = /*#__PURE__*/function () {
     value: function makeWord(text) {
       var elm = document.createElement("div");
       elm.classList.add("word");
-      elm.innerText = text;
+      elm.innerHTML = "<span>".concat(text, "</span>");
+      var img = document.createElement("img");
+      img.src = _blackCloud.default;
+      elm.appendChild(img);
       var pos = {
         bottom: -20,
-        left: Math.random() * (this.width - text.length * 16)
+        left: Math.random() * (this.width - 160)
       };
       var word = {
         elm: elm,
@@ -257,7 +266,7 @@ var App = /*#__PURE__*/function () {
       this.words.forEach(function (word) {
         word.pos.bottom += word.speed;
 
-        if (word.pos.bottom > _this4.height - 130) {
+        if (word.pos.bottom > _this4.height - 210) {
           _this4.life -= 1;
 
           _this4.removeWord(word.text);
@@ -279,6 +288,23 @@ var App = /*#__PURE__*/function () {
     value: function showStatus() {
       // life info
       this.statusElm.innerHTML = "\n      <svg\n        width=\"24\"\n        height=\"24\"\n        viewBox=\"0 0 24 24\"\n      >\n        <path d=\"M12 4.435c-1.989-5.399-12-4.597-12 3.568 0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-8.118-10-8.999-12-3.568z\" />\n      </svg>\n      <span>".concat(this.life, "</span>\n      ");
+    }
+  }, {
+    key: "init",
+    value: function init() {
+      this.inputElm.style.display = "block";
+      this.startElm.style.display = "none";
+      this.inputWordElm.focus();
+    }
+  }, {
+    key: "start",
+    value: function start() {
+      this.init();
+      this.showStatus();
+      this.addWord();
+      this.spawnWord();
+      this.scoring();
+      window.requestAnimationFrame(this.animate.bind(this));
     }
   }, {
     key: "gameover",
@@ -313,7 +339,7 @@ var App = /*#__PURE__*/function () {
 window.onload = function () {
   var app = new App();
 };
-},{}],"../../../.nvm/versions/node/v12.18.3/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./blackCloud.png":"1/blackCloud.png"}],"../../../.nvm/versions/node/v12.18.3/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -341,7 +367,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62844" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59709" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
