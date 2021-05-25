@@ -1,3 +1,5 @@
+import cloud from "./blackCloud.png";
+
 class App {
   constructor() {
     // screen setting
@@ -6,9 +8,12 @@ class App {
     this.width = window.innerWidth;
     this.height = window.innerHeight;
     this.statusElm = document.getElementById("status");
+    this.inputElm = document.getElementById("input");
     this.inputWordElm = document.getElementById("inputWord");
+    this.startElm = document.getElementById("start");
     this.resultElm = document.getElementById("result");
     this.finalScoreElm = document.getElementById("finalScore");
+    this.playElm = document.getElementById("play");
     // game setting
     this.defaultSpeed = 3;
     this.speedVariable = 3;
@@ -76,21 +81,14 @@ class App {
     // event listener
     this.resize();
     this.inputWordElm.addEventListener("keydown", this.handleInput.bind(this));
+    this.playElm.addEventListener("click", this.start.bind(this));
     window.addEventListener("resize", this.resize.bind(this), false);
-    window.requestAnimationFrame(this.animate.bind(this));
-
-    // game init
-    this.showStatus();
-    this.addWord();
-    this.spawnWord();
-    this.scoring();
   }
 
   resize() {
     this.width = window.innerWidth;
     this.height = window.innerHeight;
   }
-
   handleInput(e) {
     if (e.code === "Enter") {
       const inputText = this.inputWordElm.value;
@@ -112,7 +110,6 @@ class App {
       this.spawnWord();
     }, this.defaultSpawnInterval + Math.floor((Math.random() - 0.5) * 1000));
   }
-
   addWord() {
     const candidate = this.keywords.filter(
       (keyword) => !this.onScreenKeywords.includes(keyword)
@@ -121,14 +118,16 @@ class App {
     this.onScreenKeywords.push(text);
     this.makeWord(text);
   }
-
   makeWord(text) {
     const elm = document.createElement("div");
     elm.classList.add("word");
-    elm.innerText = text;
+    elm.innerHTML = `<span>${text}</span>`;
+    const img = document.createElement("img");
+    img.src = cloud;
+    elm.appendChild(img);
     const pos = {
       bottom: -20,
-      left: Math.random() * (this.width - text.length * 16),
+      left: Math.random() * (this.width - 160),
     };
     const word = {
       elm: elm,
@@ -139,7 +138,6 @@ class App {
     this.words.push(word);
     this.canvas.appendChild(elm);
   }
-
   removeWord(text) {
     const wordIdx = this.words.findIndex((word) => word.text === text);
     if (wordIdx < 0) {
@@ -152,25 +150,22 @@ class App {
     this.words.splice(wordIdx, 1);
     this.onScreenKeywords.splice(onScreenIdx, 1);
   }
-
   update() {
     this.words.forEach((word) => {
       word.pos.bottom += word.speed;
-      if (word.pos.bottom > this.height - 130) {
+      if (word.pos.bottom > this.height - 210) {
         this.life -= 1;
         this.removeWord(word.text);
         this.showStatus();
       }
     });
   }
-
   move() {
     this.words.forEach((word) => {
       word.elm.style.bottom = word.pos.bottom + "px";
       word.elm.style.left = word.pos.left + "px";
     });
   }
-
   showStatus() {
     // life info
     this.statusElm.innerHTML = `
@@ -184,14 +179,25 @@ class App {
       <span>${this.life}</span>
       `;
   }
-
+  init() {
+    this.inputElm.style.display = "block";
+    this.startElm.style.display = "none";
+    this.inputWordElm.focus();
+  }
+  start() {
+    this.init();
+    this.showStatus();
+    this.addWord();
+    this.spawnWord();
+    this.scoring();
+    window.requestAnimationFrame(this.animate.bind(this));
+  }
   gameover() {
     clearTimeout(this.spawnT);
     clearInterval(this.scoreT);
     this.finalScoreElm.innerHTML = `최종 점수 : ${this.score} 초`;
     this.resultElm.style.display = "flex";
   }
-
   animate(t) {
     this.update();
     this.move();
@@ -201,7 +207,6 @@ class App {
       this.gameover();
     }
   }
-
   isMobile() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
